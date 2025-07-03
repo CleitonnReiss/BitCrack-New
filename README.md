@@ -3,17 +3,37 @@
 
 Uma ferramenta para força bruta de chaves privadas de Bitcoin. O principal objetivo deste projeto é contribuir para o esforço de resolver a [transação de quebra-cabeça do Bitcoin](https://blockchain.info/tx/08389f34c98c606322740c0be6a7125d9860bb8d5cb182c02f98461e5fa6cd15): uma transação com 32 endereços que se tornam progressivamente mais difíceis de quebrar.
 
+# Versão corrigida para GPUs AMD e Intel
+Corrigido um bug que encerrava a busca abruptamente ao utilizar a opção --keyspace com o parâmetro --rangers. O erro foi identificado e resolvido.
+
 ### Usando o BitCrack
 
 #### Uso
 
 Use `cuBitCrack.exe` para dispositivos CUDA e `clBitCrack.exe` para dispositivos OpenCL.
 
+# Atualização para Windows (GPUs AMD e Intel)
+Os arquivos compilados para Windows estão localizados em:
+New BitCrack\x64\Release
+
+O executável principal para Windows é:
+clBitCrack.exe
+
+# Exemplos de uso:
+
+# Carteira 33
+./clBitCrack.exe -d 1 -b 64 -t 256 -p 1024 --keyspace 100000000:1ffffffff -c 187swFMjz1G54ycVU56B7jZFHFTNVQFDiu
+
+# Carteira 41
+./clBitCrack.exe -d 1 -b 64 -t 256 -p 1024 --keyspace 10000000000:1ffffffffff -c 1L5sU9qvJeuwQUdt4y1eiLmquFxKjtHr3E
+
+# Carteira 45
+./clBitCrack.exe -d 1 -b 64 -t 256 -p 1024 --keyspace 100000000000:1fffffffffff -c 1NtiLNGegHWE3Mp9g2JPkgx6wUg4TW7bbk
+
+# Carteira 49
+./clBitCrack.exe -d 1 -b 64 -t 256 -p 1024 --keyspace 1000000000000:1ffffffffffff -c 12CiUhYVTTH33w3SPUBqcpMoqnApAV4WCF
+
 ### Nota: **clBitCrack.exe ainda é EXPERIMENTAL**, pois usuários relataram bugs críticos ao executar em alguns dispositivos AMD e Intel.
-
-**Nota para usuários Intel:**
-
-Há um bug na implementação do OpenCL da Intel que afeta o BitCrack. Detalhes aqui: https://github.com/brichard19/BitCrack/issues/123
 
 ```
 ./clBitCrack.exe -d 1 [OPÇÕES] [ALVOS]
@@ -129,6 +149,7 @@ Existem 3 parâmetros que afetam a performance: blocos, threads por bloco e chav
 - Visual Studio 2019 (se estiver no Windows)
 - Para CUDA: CUDA Toolkit 10.1
 - Para OpenCL: Um SDK OpenCL (o próprio CUDA Toolkit contém um SDK OpenCL)
+- Sempre use a versao 120 do OpenCl para compilar todos as arquivos ou apresentara erros no windows.
 
 ### Compilando no Windows
 
@@ -157,16 +178,3 @@ Ou compilar ambos:
 ```
 make BUILD_CUDA=1 BUILD_OPENCL=1
 ```
-
-### Apoie este projeto
-
-Se você achou este projeto útil e gostaria de apoiá-lo, considere fazer uma doação. Seu apoio é muito apreciado!
-
-**BTC**: `1LqJ9cHPKxPXDRia4tteTJdLXnisnfHsof`  
-**LTC**: `LfwqkJY7YDYQWqgR26cg2T1F38YyojD67J`  
-**ETH**: `0xd28082CD48E1B279425346E8f6C651C45A9023c5`
-
-### Contato
-
-Envie dúvidas ou comentários para:  
-📧 **bitcrack.project@gmail.com**
