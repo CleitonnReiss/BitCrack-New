@@ -84,16 +84,22 @@ unsigned int subc(unsigned int a, unsigned int b, unsigned int *borrow)
 
 #ifdef DEVICE_VENDOR_INTEL
 
-// Intel devices have a mul_hi bug
-unsigned int mul_hi977(unsigned int x)
+// Versão precisa de mul_hi977 sem usar uint64_t
+inline unsigned int mul_hi977(unsigned int x)
 {
-    unsigned int high = x >> 16;
-    unsigned int low = x & 0xffff;
+    unsigned int x_lo = x & 0xFFFF;
+    unsigned int x_hi = x >> 16;
 
-    return (((low * 977) >> 16) + (high * 977)) >> 16;
+    unsigned int mul_lo = x_lo * 977;
+    unsigned int mul_hi = x_hi * 977;
+
+    unsigned int carry = (mul_lo >> 16) + (mul_hi & 0xFFFF);
+    unsigned int high = (mul_hi >> 16) + (carry >> 16);
+
+    return high;
 }
 
-// 32 x 32 multiply-add
+// 32 x 32 multiply-add com constante 977
 void madd977(unsigned int *high, unsigned int *low, unsigned int a, unsigned int c)
 {
     *low = a * 977;
