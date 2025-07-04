@@ -575,9 +575,7 @@ void CLKeySearchDevice::generateStartingPoints()
 
 secp256k1::uint256 CLKeySearchDevice::getNextKey()
 {
-    // O número de chaves por passo já está na variável _points.
-    // O cálculo do offset total é o número de chaves por passo,
-    // multiplicado pelo número de iterações (passos) que já demos.
+    
     secp256k1::uint256 totalOffset = secp256k1::uint256((uint64_t)_points) * _iterations * _stride;
     
     return _start + totalOffset;
